@@ -6,7 +6,7 @@ import pyreadstat
 class Variable(NamedTuple):
     name: str
     label: str
-    value_labels: list
+    values: list
 
 
 class Result(NamedTuple):
@@ -17,7 +17,7 @@ class Result(NamedTuple):
 def parse_metadata(meta):
     names = meta.column_names
     labels = meta.column_labels
-    value_labels = meta.variable_value_labels
+    values = meta.variable_value_labels
 
     has_labels = 0 < len(labels) == len(names)
 
@@ -28,9 +28,9 @@ def parse_metadata(meta):
         label = ""
         if has_labels and type(labels[i]) is str:
             label = labels[i].strip()
-        value_label = value_labels[n] if n in value_labels else []
+        value = values[n] if n in values else []
 
-        variables.append(Variable(name, label, value_label)._asdict())
+        variables.append(Variable(name, label, value)._asdict())
 
     return Result(variables, meta.number_columns)._asdict()
 

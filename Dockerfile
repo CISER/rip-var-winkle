@@ -8,7 +8,7 @@ WORKDIR /home/rvw
 
 COPY *.py requirements.txt supervisor.conf ./
 
-RUN apt-get update && apt-get install -y supervisor && pip install --no-cache-dir -r requirements.txt && pip install gunicorn
+RUN apt-get update && apt-get install -y supervisor && pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 8000
 
