@@ -1,3 +1,4 @@
+import os
 import tempfile
 from typing import NamedTuple
 
@@ -15,7 +16,7 @@ class Response(NamedTuple):
 
 
 @app.route("/", methods=['POST'])
-def hello():
+def upload_file():
     upload = request.files['file']
 
     filename = upload.filename.split('.')
@@ -33,5 +34,26 @@ def hello():
 
     data = parse_metadata(meta)
     res = Response(f"{upload.filename} parsed successfully!", 200, data)._asdict()
+
+    return jsonify(res)
+
+
+@app.route("/local", methods=['POST'])
+def local_file():
+    form = request.form.to_dict()
+    requested_file = form['file']
+
+    if not os.path.exists(requested_file):
+        e = Response(f"\"{requested_file}\" is inaccessible or does not exist.", 400, None)._asdict()
+        return make_response(jsonify(e), 400)
+
+    df, meta, err = parse_file(requested_file)
+
+    if err:
+        e = Response(f"\"{requested_file}\" is not supported at this time.", 400, None)._asdict()
+        return make_response(jsonify(e), 400)
+
+    data = parse_metadata(meta)
+    res = Response(f"{requested_file} parsed successfully!", 200, data)._asdict()
 
     return jsonify(res)

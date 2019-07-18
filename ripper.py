@@ -45,6 +45,9 @@ def parse_file(filename):
     elif "sas7bdat" in filename.lower():
         df, meta = pyreadstat.read_sas7bdat(filename, metadataonly=True)
         return df, meta, False
+    elif "xpt" in filename.lower():
+        df, meta = pyreadstat.read_xport(filename, metadataonly=True)
+        return df, meta, False
     elif "dta" in filename.lower():
         df, meta = pyreadstat.read_dta(filename, apply_value_formats=True, metadataonly=True)
         return df, meta, False
