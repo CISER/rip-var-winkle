@@ -37,12 +37,16 @@ def parse_metadata(meta):
 
 def parse_file(filename):
     if "sav" in filename.lower():
-        return pyreadstat.read_sav(filename, apply_value_formats=True, metadataonly=True)
+        df, meta = pyreadstat.read_sav(filename, apply_value_formats=True, metadataonly=True)
+        return df, meta, False
     elif "por" in filename.lower():
-        return pyreadstat.read_por(filename, apply_value_formats=True, metadataonly=True)
+        df, meta = pyreadstat.read_por(filename, apply_value_formats=True, metadataonly=True)
+        return df, meta, False
     elif "sas7bdat" in filename.lower():
-        return pyreadstat.read_sas7bdat(filename, metadataonly=True)
+        df, meta = pyreadstat.read_sas7bdat(filename, metadataonly=True)
+        return df, meta, False
     elif "dta" in filename.lower():
-        return pyreadstat.read_dta(filename, apply_value_formats=True, metadataonly=True)
+        df, meta = pyreadstat.read_dta(filename, apply_value_formats=True, metadataonly=True)
+        return df, meta, False
     else:
-        raise SystemExit("Supplied file is not a supported type.")
+        return None, None, True
