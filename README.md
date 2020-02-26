@@ -21,7 +21,7 @@ Assuming the RVP server is running on `http://host:8000`, you have two options.
 
 ## Can I see some example JSON?
 
-Sure! Here is the output when the SPSS file for [this study](https://cisermgmt.cornell.edu/go/PHPs/catalogSingleStudy.php?IDTITLE=2806) was processed by RVP.
+Sure! Here is the output when the SPSS file for [this study](https://archive.ciser.cornell.edu/studies/2806) was processed by RVP.
 
 ```json
 {
